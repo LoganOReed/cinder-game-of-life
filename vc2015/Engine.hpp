@@ -40,8 +40,8 @@ public:
 private:
     int width;
     int height;
-    int board[192][108];
-    int new_board[192][108];
+    int board[NUM_ROWS][NUM_COLS];
+    int new_board[NUM_ROWS][NUM_COLS];
     int x = 0;
     int y = 0;
     const cinder::vec2 center = getWindowCenter();

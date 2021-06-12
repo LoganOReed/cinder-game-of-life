@@ -5,6 +5,9 @@
 #include "D:\Coding\CPP\Cinder\GameOfLife\vc2015\Engine.hpp"
 #include <stdio.h>
 
+#define WIDTH 480
+#define HEIGHT 720
+
 using namespace ci;
 using namespace ci::app;
 using namespace std;
@@ -17,21 +20,22 @@ class GameOfLifeApp : public App {
 	void update() override;
 	void draw() override;
 private:
-    Engine engine{ 1000,1000 };
+    Engine engine{ WIDTH,HEIGHT };
     float rate = 10.0f;
     int totalTime = 5;
-    int framesRendered = 0;
+    int framesRendered = 1;
     //start ffmpeg
-    const char* cmd = "ffmpeg -r 10 -f rawvideo -pix_fmt rgba -s 1000x1000 -i - "
+    //need to update when I change the resolution
+    const char* cmd = "ffmpeg -r 10 -f rawvideo -pix_fmt rgba -s 480x720 -i - "
         "-threads 0 -preset fast -y -pix_fmt yuv420p -crf 21 -vf vflip output.mp4";
     FILE* ffmpeg = _popen(cmd, "wb");
-    int* buffer = new int[1000 * 1000];
+    int* buffer = new int[WIDTH * HEIGHT];
 };
 
 void GameOfLifeApp::setup()
 {
     setFrameRate(rate);
-    setWindowSize(1000, 1000);
+    setWindowSize(WIDTH, HEIGHT);
     engine.InitializeBoard();
 }
 
@@ -51,12 +55,12 @@ void GameOfLifeApp::draw()
         engine.BoardReset();
 
         //render
-        gl::readPixels(0, 0, 1000, 1000, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+        gl::readPixels(0, 0, WIDTH, HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
-        fwrite(buffer, sizeof(int) * 1000 * 1000, 1, ffmpeg);
+        fwrite(buffer, sizeof(int) * WIDTH * HEIGHT, 1, ffmpeg);
 
         framesRendered++;
-        if (framesRendered > totalTime * 5) {
+        if (framesRendered > totalTime * 10) {
             _pclose(ffmpeg);
             EXIT_SUCCESS();
         }
