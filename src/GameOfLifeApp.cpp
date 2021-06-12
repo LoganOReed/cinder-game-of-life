@@ -21,12 +21,12 @@ class GameOfLifeApp : public App {
 	void draw() override;
 private:
     Engine engine{ WIDTH,HEIGHT };
-    float rate = 10.0f;
-    int totalTime = 15;
+    float rate = 5.0f;
+    int totalTime = 30;
     int framesRendered = 0;
     //start ffmpeg
     //need to update when I change the resolution
-    const char* cmd = "ffmpeg -r 10 -f rawvideo -pix_fmt rgba -s 480x720 -i - "
+    const char* cmd = "ffmpeg -r 5 -f rawvideo -pix_fmt rgba -s 480x720 -i - "
         "-threads 0 -preset fast -y -pix_fmt yuv420p -crf 21 -vf vflip output.mp4";
     FILE* ffmpeg = _popen(cmd, "wb");
     int* buffer = new int[WIDTH * HEIGHT];
@@ -83,7 +83,13 @@ void GameOfLifeApp::keyDown( KeyEvent event )
     }
     if (event.getChar() == '1') {
         isRecording = true;
-        cout << "Starting Recording..." << endl;
+        console() << "starting recording..." << endl;
+        engine.BoardReset();
+        engine.MakeAmongUs();
+    }
+    if (event.getChar() == ' ') {
+        isRecording = true;
+        console() << "Starting Recording..." << endl;
     }
     if (event.getChar() == '2') {
         engine.BoardReset();

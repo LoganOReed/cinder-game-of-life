@@ -25,6 +25,7 @@ public:
     void Update();
     void Draw();
     void SetBoardToAllDead();
+    void MakeAmongUs();
     void MakeGlider();
     void MakeBlinker();
     void MakeFrog();
