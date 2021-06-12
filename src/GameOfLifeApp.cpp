@@ -23,13 +23,14 @@ private:
     Engine engine{ WIDTH,HEIGHT };
     float rate = 10.0f;
     int totalTime = 15;
-    int framesRendered = 1;
+    int framesRendered = 0;
     //start ffmpeg
     //need to update when I change the resolution
     const char* cmd = "ffmpeg -r 10 -f rawvideo -pix_fmt rgba -s 480x720 -i - "
         "-threads 0 -preset fast -y -pix_fmt yuv420p -crf 21 -vf vflip output.mp4";
     FILE* ffmpeg = _popen(cmd, "wb");
     int* buffer = new int[WIDTH * HEIGHT];
+    bool isRecording = false;
 };
 
 void GameOfLifeApp::setup()
@@ -55,14 +56,15 @@ void GameOfLifeApp::draw()
         engine.BoardReset();
 
         //render
-        gl::readPixels(0, 0, WIDTH, HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+        if (isRecording == true) {
+            framesRendered++;
+            if (framesRendered > totalTime * 10) {
+                _pclose(ffmpeg);
+                EXIT_SUCCESS();
+            }
+            gl::readPixels(0, 0, WIDTH, HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
-        fwrite(buffer, sizeof(int) * WIDTH * HEIGHT, 1, ffmpeg);
-
-        framesRendered++;
-        if (framesRendered > totalTime * 10) {
-            _pclose(ffmpeg);
-            EXIT_SUCCESS();
+            fwrite(buffer, sizeof(int) * WIDTH * HEIGHT, 1, ffmpeg);
         }
 }
 
@@ -79,10 +81,10 @@ void GameOfLifeApp::keyDown( KeyEvent event )
     if (event.getChar() == 'r') {
         engine.InitializeBoard();
     }
-    //if (event.getChar() == '1') {
-        //engine.BoardReset();
-       // engine.MakeOscillators();
-    //}
+    if (event.getChar() == '1') {
+        isRecording = true;
+        cout << "Starting Recording..." << endl;
+    }
     if (event.getChar() == '2') {
         engine.BoardReset();
         engine.MakeStillLife();
