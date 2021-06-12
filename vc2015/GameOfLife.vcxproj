@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h" />
+    <ClInclude Include="ColorPalette.hpp" />
     <ClInclude Include="Engine.hpp">
       <DeploymentContent>false</DeploymentContent>
     </ClInclude>

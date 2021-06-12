@@ -16,7 +16,8 @@
 #define NUM_COLS 144
 #define NUM_ROWS 96
 
-using namespace cinder::app;
+using namespace ci;
+using namespace ci::app;
 
 class Engine {
 public:
@@ -44,9 +45,11 @@ private:
     int length = 5;
     int board[NUM_ROWS][NUM_COLS];
     int new_board[NUM_ROWS][NUM_COLS];
+    int colorBoard[NUM_ROWS][NUM_COLS];
     int x = 0;
     int y = 0;
     const cinder::vec2 center = getWindowCenter();
+    Color ages[4];
 };
 
 #endif

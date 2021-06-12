@@ -24,7 +24,8 @@ private:
     float rate = 5.0f;
     int totalTime = 30;
     int framesRendered = 0;
-    //start ffmpeg
+    // start ffmpeg telling it to expect raw rgba 720p-60hz frames
+    // -i - tells it to read frames from stdin
     //need to update when I change the resolution
     const char* cmd = "ffmpeg -r 5 -f rawvideo -pix_fmt rgba -s 480x720 -i - "
         "-threads 0 -preset fast -y -pix_fmt yuv420p -crf 21 -vf vflip output.mp4";
@@ -51,7 +52,7 @@ void GameOfLifeApp::update()
 
 void GameOfLifeApp::draw()
 {
-        gl::clear(Color(0, 0, 0));
+        gl::clear(Color(18.0 / 255.0,18.0 / 255.0,18.0 / 255.0));
         engine.Draw();
         engine.BoardReset();
 
@@ -82,8 +83,8 @@ void GameOfLifeApp::keyDown( KeyEvent event )
         engine.InitializeBoard();
     }
     if (event.getChar() == '1') {
-        isRecording = true;
-        console() << "starting recording..." << endl;
+        //isRecording = true;
+        //console() << "starting recording..." << endl;
         engine.BoardReset();
         engine.MakeAmongUs();
     }
