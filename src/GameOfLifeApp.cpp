@@ -22,7 +22,7 @@ class GameOfLifeApp : public App {
 private:
     Engine engine{ WIDTH,HEIGHT };
     float rate = 10.0f;
-    int totalTime = 5;
+    int totalTime = 15;
     int framesRendered = 1;
     //start ffmpeg
     //need to update when I change the resolution

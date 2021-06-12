@@ -13,8 +13,8 @@
 #include "cinder/Vector.h"
 #include "cinder/Quaternion.h"
 
-#define NUM_ROWS 100
-#define NUM_COLS 100
+#define NUM_COLS 144
+#define NUM_ROWS 96
 
 using namespace cinder::app;
 
@@ -40,6 +40,7 @@ public:
 private:
     int width;
     int height;
+    int length = 5;
     int board[NUM_ROWS][NUM_COLS];
     int new_board[NUM_ROWS][NUM_COLS];
     int x = 0;

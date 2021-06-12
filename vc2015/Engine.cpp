@@ -43,7 +43,7 @@ void Engine::Draw() {
     for (size_t r = 0; r < NUM_ROWS; r++) {
         for (size_t c = 0; c < NUM_COLS; c++) {
             if (new_board[r][c] == 1) {
-                gl::drawSolidRect(Rectf(r * 10, c * 10, r * 10 + 10, c * 10 + 10));
+                gl::drawSolidRect(Rectf(r * length, c * length, r * length + length, c * length + length));
             }
         }
     }
