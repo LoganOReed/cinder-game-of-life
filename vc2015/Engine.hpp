@@ -13,8 +13,8 @@
 #include "cinder/Vector.h"
 #include "cinder/Quaternion.h"
 
-#define NUM_ROWS 192
-#define NUM_COLS 108
+#define NUM_ROWS 100
+#define NUM_COLS 100
 
 using namespace cinder::app;
 
